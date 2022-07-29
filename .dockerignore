@@ -1,0 +1,14 @@
+*.log
+*.plan
+*.tfstate*
+.DS_Store
+.envrc
+.git
+.secrets
+.terraform
+Dockerfile
+OPSDOC.md
+README.md
+SECURITY.md
+assets
+terraform
