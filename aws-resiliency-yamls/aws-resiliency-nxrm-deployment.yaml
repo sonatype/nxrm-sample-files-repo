@@ -1,3 +1,12 @@
+# The YAML below deploys Nexus Repository.
+# Note the following important information:
+# 1. replicas is set to 1.
+# 2. volumeMounts are specified for the Nexus Repository license, local persistent volume, and logback config map for consolidating task logs into one log file. 
+# 3. Docker repositories will need additional ports exposed matching your repository connector configuration.
+# 4. The deployment YAML includes three busybox sidecar containers which tail the Nexus Repository logs via a local persistent volume and stream them to the worker node  running the nxrm pod where Fluentbit picks them up and send to CloudWatch. 
+# See Kubernetes documentation at https://kubernetes.io/docs/concepts/cluster-administration/logging/ for more information on the sidecar pattern for accessing logs.
+-------------
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
