@@ -31,3 +31,5 @@ After creating the namespace, **you must run your YAML files in the order below:
 8. [Services YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/aws-resiliency-yamls/aws-resiliency-services.yaml)
    * Optional - [Ingress for Docker YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/aws-resiliency-yamls/aws-resiliency-ingress-for-docker-connector.yaml)
    * Optional - [Nodeport for Docker YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/aws-resiliency-yamls/aws-resiliency-nodeport-for-docker-connector.yaml)
+
+> **Note** The resources created by these YAMLs are not in the default namespace.
