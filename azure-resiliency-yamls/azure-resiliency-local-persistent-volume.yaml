@@ -1,4 +1,4 @@
-#You should not use Dynamic Volume Provisioning as it will cause scheduling problems if AKS provisions the Nexus Repository pod and the volume in different AZs. 
+# You should not use Dynamic Volume Provisioning as it will cause scheduling problems if AKS provisions the Nexus Repository pod and the volume in different AZs. 
 # The volume used must be the local volume attached as illustrated in the sample persistent volume YAML file. 
 
 apiVersion: v1
