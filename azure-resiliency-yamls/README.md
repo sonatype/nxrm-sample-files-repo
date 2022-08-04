@@ -11,12 +11,14 @@ To create a namespace, use a command like the following with the kubectl command
 
 # YAML Order
 After creating the namespace, **you must run your YAML files in the order below:**
-1. [Storage Class YAML]
-2. [Secrets YAML] **or** [License Configuration Mapping YAML]
-3. [Logback Tasklogfile Override YAML]
-4. [Local Persistent Volume YAML]
-5. [Local Persistent Volume Claim YAML]
-6. [Kustomize Deployment YAML] **or** [Secrets Store CSI Driver Deployment YAML]
-7. [Services YAML]
-  * Optional - [Ingress for Docker]
-  * Optional - [Nodeport for Docker]
+1. [Storage Class YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-storage-class.yaml)
+2. [Secrets YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-secrets.yaml) **or** [License Configuration Mapping YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-license-configuration-mapping.yaml)
+3. [Logback Tasklogfile Override YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-nxrm-logback-tasklogfile-override.yaml)
+4. [Local Persistent Volume YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-local-persistent-volume.yaml)
+5. [Local Persistent Volume Claim YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-local-persistent-volume-claim.yaml)
+6. [Kustomize Deployment YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-kustomize-deployment.yaml) **or** [Secrets Store CSI Driver Deployment YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-secrets-store-CSI-deployment.yaml)
+7. [Services YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-services.yaml)
+  * Optional - [Ingress for Docker](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-ingress-for-docker.yaml)
+  * Optional - [Nodeport for Docker](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/azure-resiliency-yamls/azure-resiliency-nodeport-for-Docker.yaml)
+
+> **Note** The resources created by these YAMLs are not in the default namespace.
