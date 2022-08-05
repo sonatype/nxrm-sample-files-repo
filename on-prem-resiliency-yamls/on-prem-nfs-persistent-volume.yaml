@@ -1,0 +1,17 @@
+kind: PersistentVolume
+metadata:
+  name: nfs-blobstorage-pv
+spec:
+  capacity:
+    storage: <size>
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-blobstorage
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: <path to mount>
+    server: <server ip address>
