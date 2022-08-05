@@ -1,0 +1,23 @@
+# If you require your clients to access more than one Docker Repository, you must use an external load balancer (e.g., NGINX) as a reverse proxy instead of this ingress for Docker YAML.
+# In the following YAML, <scheme> should typically be set to internal.
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: nxrm
+  name: ingress-nxrm-docker
+  annotations:
+    kubernetes.io/ingress.class: <load balancer class>
+    <load balancer class>.ingress.kubernetes.io/scheme: <scheme>
+    <load balancer class>.ingress.kubernetes.io/subnets: subnet-abc, subnet-xyz
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nxrm-service-docker
+                port:
+                  number: 9090
