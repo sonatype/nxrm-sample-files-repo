@@ -1,0 +1,74 @@
+# The deploymeny YAML below deploys Nexus Repository while the services.yaml also shown below sets up the Ingress along with a Load Balancer.
+# Note the following important information:
+# replicas is set to 1.
+# Docker repositories will need additional ports exposed matching your repository connector configuration.
+# The environment variable NEXUS_SEARCH_INDEX_REBUILD_ON_STARTUP will automatically rebuild your Elasticsearch index on node startup.
+# The NFS Blob Storage Volume is mounted into a /blobs directory in the Nexus Repository container. Blobs should be stored in this directory. For example, when creating a new blob store, specify "/blobs" as the root in the Path field in the Create blob store form (e.g., /blobs/BlobStore1).
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nxrm-deployment
+  namespace: nxrm
+  labels:
+    app: nxrm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nxrm
+  template:
+    metadata:
+      labels:
+        app: nxrm
+    spec:
+      initContainers:
+        - name: chown-nexusdata-owner-to-nexus
+          image: busybox:1.33.1
+          command: ['chown', '-R', '200:200', '/blobs']
+          volumeMounts:
+            - name: nfs-blob-storage
+              mountPath: /blobs
+      containers:
+        - name: nxrm-pod
+          image: sonatype/nexus3:3.33.0
+          securityContext:
+            runAsUser: 200
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+          env:
+            - name: DB_NAME
+              value: <db-name> 
+            - name: DB_USER
+              value: <db-user>
+            - name: DB_PASSWORD
+              value: <db-password>
+            - name: LICENSE_FILE
+              value: /etc/nxrm-license/nxrm-license.lic
+            - name: NEXUS_SECURITY_INITIAL_PASSWORD
+              value: <yournexusadminpassword>
+            - name: NEXUS_SEARCH_INDEX_REBUILD_ON_STARTUP
+              value: "true"
+            - name: INSTALL4J_ADD_VM_PARAMS
+              value: "-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m \
+          -Dnexus.licenseFile=${LICENSE_FILE} \
+          -Dnexus.datastore.enabled=true \
+          -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs \
+          -Dnexus.datastore.nexus.name=nexus \
+          -Dnexus.datastore.nexus.type=jdbc \
+          -Dnexus.datastore.nexus.jdbcUrl=jdbc:postgresql://postgres_url:5432/${DB_NAME} \
+          -Dnexus.datastore.nexus.username=${DB_USER} \
+          -Dnexus.datastore.nexus.password=${DB_PASSWORD}"
+          volumeMounts:
+            - name: nfs-blob-storage
+              mountPath: /blobs
+            - name: license-volume
+              mountPath: /etc/nxrm-license
+      volumes:
+        - name: nfs-blob-storage
+          persistentVolumeClaim:
+            claimName: nfs-blobstorage-claim
+        - name: license-volume
+          configMap:
+            name: nxrm-license
