@@ -11,12 +11,12 @@ To create a namespace, use a command like the following with the kubectl command
 
 # YAML Order
 After creating the namespace, **you must run your YAML files in the order below:**
-1. [Persistent Volume YAML]
-2. [Persistent Volume Claim YAML]
-3. [License Configuration Mapping YAML]
-4. [Deployment YAML]
-5. [Services YAML]
-   * Optional - [Ingress for Docker YAML]
-   * Optional - [Nodeport for Docker YAML]
+1. [Persistent Volume YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/on-prem-resiliency-yamls/on-prem-resiliency-nfs-persistent-volume.yaml)
+2. [Persistent Volume Claim YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/on-prem-resiliency-yamls/on-prem-resiliency-nfs-persistent-volume-claim.yaml)
+3. [License Configuration Mapping YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/on-prem-resiliency-yamls/on-prem-resiliency-license-config-mapping.yaml)
+4. [Deployment YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/on-prem-resiliency-yamls/on-prem-resiliency-deployment.yaml)
+5. [Services YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/on-prem-resiliency-yamls/on-prem-resiliency-services.yaml)
+   * Optional - [Ingress for Docker YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/on-prem-resiliency-yamls/on-prem-resiliency-ingress-for-docker-connector.yaml)
+   * Optional - [Nodeport for Docker YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/on-prem-resiliency-yamls/on-prem-resiliency-nodeport-for-docker-connector.yaml)
    
 > **Note** The resources created by these YAMLs are not in the default namespace.
