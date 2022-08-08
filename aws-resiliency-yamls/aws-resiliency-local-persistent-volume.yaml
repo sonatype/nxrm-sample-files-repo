@@ -1,3 +1,5 @@
+# Copyright Sonatype, Inc., 2022, All Rights Reserved.
+#
 # You should not use Dynamic EBS Volume Provisioning as it will cause scheduling problems if EKS provisions the Nexus Repository pod and the EBS volume in different AZs. 
 # The EBS volume used must be the local volume attached as illustrated in the sample persistent volume YAML file. 
 
