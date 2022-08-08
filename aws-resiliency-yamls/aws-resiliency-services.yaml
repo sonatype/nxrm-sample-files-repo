@@ -1,3 +1,5 @@
+# Copyright Sonatype, Inc., 2022, All Rights Reserved.
+#
 # The services.yaml shown below sets up the Ingress Load Balancer.
 # Note that <scheme> should typically be set to internal.
 
