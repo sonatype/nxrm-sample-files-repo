@@ -1,3 +1,5 @@
+# Copyright Sonatype, Inc., 2022, All Rights Reserved.
+# 
 # The YAML below deploys Nexus Repository.
 # Note the following important information:
 # 1. replicas is set to 1.
