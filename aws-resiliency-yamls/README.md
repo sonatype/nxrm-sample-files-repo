@@ -1,3 +1,5 @@
+Copyright Sonatype, Inc., 2022, All Rights Reserved.
+
 # Overview
 You can use the sample YAML files in this section to help set up the YAMLs you will need for a resilient deployment. 
 Ensure you have filled out the YAML files with appropriate information for your deployment.
