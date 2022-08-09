@@ -1,3 +1,5 @@
+# Copyright Sonatype, Inc., 2022, All Rights Reserved.
+#
 # In the following YAML, <scheme> should typically be set to internal.
 
 apiVersion: networking.k8s.io/v1
