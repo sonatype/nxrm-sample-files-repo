@@ -1,3 +1,5 @@
+# Copyright Sonatype, Inc., 2022, All Rights Reserved.
+#
 # The deploymeny YAML below deploys Nexus Repository while the services.yaml also shown below sets up the Ingress along with a Load Balancer.
 # Note the following important information:
 # replicas is set to 1.
