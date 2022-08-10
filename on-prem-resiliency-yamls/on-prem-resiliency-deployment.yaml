@@ -6,6 +6,9 @@
 # Docker repositories will need additional ports exposed matching your repository connector configuration.
 # The environment variable NEXUS_SEARCH_INDEX_REBUILD_ON_STARTUP will automatically rebuild your Elasticsearch index on node startup.
 # The NFS Blob Storage Volume is mounted into a /blobs directory in the Nexus Repository container. Blobs should be stored in this directory. For example, when creating a new blob store, specify "/blobs" as the root in the Path field in the Create blob store form (e.g., /blobs/BlobStore1).
+#
+# Note: This YAML file is just an example and cannot be used as-is. 
+# You must fill it out with the appropriate information for your deployment to be able to use it.
 
 apiVersion: apps/v1
 kind: Deployment
