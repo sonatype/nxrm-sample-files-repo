@@ -7,6 +7,9 @@
 # 3. Docker repositories will need additional ports exposed matching your repository connector configuration.
 # 4. The deployment YAML includes three busybox sidecar containers which tail the Nexus Repository logs via a local persistent volume and stream them to the worker node  running the nxrm pod where Fluentbit picks them up and send to CloudWatch. 
 # See Kubernetes documentation at https://kubernetes.io/docs/concepts/cluster-administration/logging/ for more information on the sidecar pattern for accessing logs.
+#
+# Note: This YAML file is just an example and cannot be used as-is. 
+# You must fill it out with the appropriate information for your deployment to be able to use it.
 -------------
 
 apiVersion: apps/v1
