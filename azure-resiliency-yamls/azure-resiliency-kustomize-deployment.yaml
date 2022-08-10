@@ -8,6 +8,9 @@
 # The environment variable NEXUS_SEARCH_INDEX_REBUILD_ON_STARTUP will automatically rebuild your Elasticsearch index on pod/node restart.
 # The deployment YAML includes three busybox sidecar containers which tails the Nexus Repository logs (request, audit, and task logs) to stdout so that they can be automatically pushed to Azure Monitor. 
 # See Kubernetes documentation at https://kubernetes.io/docs/concepts/cluster-administration/logging/ for more information on the sidecar pattern for accessing logs.
+#
+# Note: This YAML file is just an example and cannot be used as-is. 
+# You must fill it out with the appropriate information for your deployment to be able to use it.
 
 apiVersion: apps/v1
 kind: Deployment
