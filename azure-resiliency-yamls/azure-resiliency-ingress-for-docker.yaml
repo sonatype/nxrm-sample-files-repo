@@ -2,6 +2,9 @@
 #
 # If you require your clients to access more than one Docker Repository, you must use an external load balancer (e.g., NGINX) as a reverse proxy instead of this ingress for Docker YAML.
 # See our help documentation at https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/docker-registry/docker-repository-reverse-proxy-strategies
+#
+# Note: This YAML file is just an example and cannot be used as-is. 
+# You must fill it out with the appropriate information for your deployment to be able to use it.
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
