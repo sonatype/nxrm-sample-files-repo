@@ -6,7 +6,7 @@
 
 -->
 # Overview
-This repository contains sample files for reference in our [Nexus Repository Help Documentation](https://help.sonatype.com/repomanager3). All files in this repository are for example reference only and cannot be used as-is with any Nexus Repository deployment.
+This repository contains sample files for reference in our [Nexus Repository Help Documentation](https://help.sonatype.com/repomanager3). All files in this repository are examples for reference only and cannot be used as-is with any Nexus Repository deployment.
 
 # Contents
 * [AWS Resilient Deployment Example YAMLs](https://github.com/sonatype/nxrm-sample-files-repo/tree/main/aws-resiliency-yamls) - This section contains sample YAML files used for our [Single-Node Cloud Resilient Deployment Example Using AWS](https://help.sonatype.com/repomanager3/planning-your-implementation/resiliency-and-high-availability/single-node-cloud-resilient-deployment-example-using-aws)
