@@ -1,7 +1,8 @@
 # Copyright Sonatype, Inc., 2022, All Rights Reserved.
 #
-# Note: This YAML file is just an example and cannot be used as-is. 
+# Note: This YAML file is just an example and cannot be used as-is.
 # You must fill it out with the appropriate information for your deployment to be able to use it.
+# Ignore this file if you don't use docker repositories
 #
 apiVersion: v1
 kind: Service
@@ -18,4 +19,4 @@ spec:
     - name: docker-connector
       protocol: TCP
       port: 9090
-      targetPort: 9090
+      targetPort: 8081
