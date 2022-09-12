@@ -1,5 +1,5 @@
 # Copyright Sonatype, Inc., 2022, All Rights Reserved.
-# Note: This YAML file is just an example and cannot be used as-is. 
+# Note: This YAML file is just an example and cannot be used as-is.
 # You must fill it out with the appropriate information for your deployment to be able to use it.
 
 apiVersion: v1
@@ -58,12 +58,12 @@ data:
         storage.sync              normal
         storage.checksum          off
         storage.backlog.mem_limit 5M
- 
+
     @INCLUDE nexus-log.conf
     @INCLUDE nexus-request-log.conf
     @INCLUDE nexus-audit-log.conf
     @INCLUDE nexus-tasks-log.conf
- 
+
   nexus-log.conf: |
     [INPUT]
         Name                tail
@@ -77,7 +77,7 @@ data:
         Rotate_Wait         30
         storage.type        filesystem
         Read_from_Head      ${READ_FROM_HEAD}
- 
+
     [FILTER]
         Name                kubernetes
         Match               nexus.nexus-log
@@ -89,7 +89,7 @@ data:
         K8S-Logging.Exclude Off
         Labels              Off
         Annotations         Off
- 
+
     [OUTPUT]
         Name                cloudwatch_logs
         Match               nexus.nexus-log
@@ -98,7 +98,7 @@ data:
         log_stream_prefix   ${HOST_NAME}-nexus.log-
         auto_create_group   true
         extra_user_agent    container-insights
- 
+
   nexus-request-log.conf: |
     [INPUT]
         Name                tail
@@ -112,7 +112,7 @@ data:
         Rotate_Wait         30
         storage.type        filesystem
         Read_from_Head      ${READ_FROM_HEAD}
- 
+
     [FILTER]
         Name                kubernetes
         Match               nexus.request-log
@@ -124,7 +124,7 @@ data:
         K8S-Logging.Exclude Off
         Labels              Off
         Annotations         Off
- 
+
     [OUTPUT]
         Name                cloudwatch_logs
         Match               nexus.request-log
@@ -133,7 +133,7 @@ data:
         log_stream_prefix   ${HOST_NAME}-request.log-
         auto_create_group   true
         extra_user_agent    container-insights
- 
+
   nexus-audit-log.conf: |
     [INPUT]
         Name                tail
@@ -147,7 +147,7 @@ data:
         Rotate_Wait         30
         storage.type        filesystem
         Read_from_Head      ${READ_FROM_HEAD}
- 
+
     [FILTER]
         Name                kubernetes
         Match               nexus.audit-log
@@ -159,7 +159,7 @@ data:
         K8S-Logging.Exclude Off
         Labels              Off
         Annotations         Off
- 
+
     [OUTPUT]
         Name                cloudwatch_logs
         Match               nexus.audit-log
@@ -168,7 +168,7 @@ data:
         log_stream_prefix   ${HOST_NAME}-audit.log-
         auto_create_group   true
         extra_user_agent    container-insights
- 
+
   nexus-tasks-log.conf: |
     [INPUT]
         Name                tail
@@ -182,7 +182,7 @@ data:
         Rotate_Wait         30
         storage.type        filesystem
         Read_from_Head      ${READ_FROM_HEAD}
- 
+
     [FILTER]
         Name                kubernetes
         Match               nexus.tasks-log
@@ -194,7 +194,7 @@ data:
         K8S-Logging.Exclude Off
         Labels              Off
         Annotations         Off
- 
+
     [OUTPUT]
         Name                cloudwatch_logs
         Match               nexus.tasks-log
@@ -203,28 +203,28 @@ data:
         log_stream_prefix   ${HOST_NAME}-tasks.log-
         auto_create_group   true
         extra_user_agent    container-insights
- 
+
   parsers.conf: |
     [PARSER]
         Name                docker
         Format              json
         Time_Key            time
         Time_Format         %Y-%m-%dT%H:%M:%S.%LZ
- 
+
     [PARSER]
         Name                syslog
         Format              regex
         Regex               ^(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$
         Time_Key            time
         Time_Format         %b %d %H:%M:%S
- 
+
     [PARSER]
         Name                container_firstline
         Format              regex
         Regex               (?<log>(?<="log":")\S(?!\.).*?)(?<!\\)".*(?<stream>(?<="stream":").*?)".*(?<time>\d{4}-\d{1,2}-\d{1,2}T\d{2}:\d{2}:\d{2}\.\w*).*(?=})
         Time_Key            time
         Time_Format         %Y-%m-%dT%H:%M:%S.%LZ
- 
+
     [PARSER]
         Name                cwagent_firstline
         Format              regex
@@ -254,7 +254,7 @@ spec:
     spec:
       containers:
         - name: fluent-bit
-          image: amazon/aws-for-fluent-bit:2.10.0
+          image: amazon/aws-for-fluent-bit:2.28.0
           imagePullPolicy: Always
           env:
             - name: AWS_REGION
