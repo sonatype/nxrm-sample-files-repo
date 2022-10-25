@@ -56,7 +56,7 @@ spec:
             - name: NEXUS_SEARCH_INDEX_REBUILD_ON_STARTUP
               value: "true"
             - name: INSTALL4J_ADD_VM_PARAMS
-              value: "-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m \
+              value: "-Xms2703m -Xmx2703m \
           -Dnexus.licenseFile=${LICENSE_FILE} \
           -Dnexus.datastore.enabled=true \
           -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs \
