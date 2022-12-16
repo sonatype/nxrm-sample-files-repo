@@ -1,26 +1,26 @@
 # Copyright Sonatype, Inc., 2022, All Rights Reserved.
-# 
+#
 # The YAML below deploys Nexus Repository.
 # Note the following important information:
 # 1. replicas is set to 1.
-# 2. volumeMounts are specified for the Nexus Repository license, local persistent volume, and logback config map for consolidating task logs into one log file. 
+# 2. volumeMounts are specified for the Nexus Repository license, local persistent volume, and logback config map for consolidating task logs into one log file.
 # 3. Docker repositories will need additional ports exposed matching your repository connector configuration.
-# 4. The deployment YAML includes three busybox sidecar containers which tail the Nexus Repository logs via a local persistent volume and stream them to the worker node  running the nxrm pod where Fluentbit picks them up and send to CloudWatch. 
+# 4. The deployment YAML includes three busybox sidecar containers which tail the Nexus Repository logs via a local persistent volume and stream them to the worker node  running the nxrm pod where Fluentbit picks them up and send to CloudWatch.
 # See Kubernetes documentation at https://kubernetes.io/docs/concepts/cluster-administration/logging/ for more information on the sidecar pattern for accessing logs.
 #
-# Note: This YAML file is just an example and cannot be used as-is. 
+# Note: This YAML file is just an example and cannot be used as-is.
 # You must fill it out with the appropriate information for your deployment to be able to use it.
--------------
 
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: nxrm-deployment-nexus-27385
-  namespace: nxrm-nexus-27385
+  name: nxrm-statefulset
+  namespace: nxrm
   labels:
     app: nxrm
 spec:
   replicas: 1
+  serviceName: "nxrm-3-44-0-nxrm-statefulset"
   selector:
     matchLabels:
       app: nxrm
@@ -29,14 +29,14 @@ spec:
       labels:
         app: nxrm
     spec:
-      serviceAccountName: nxrm-nexus-27385-deployment-sa
+      serviceAccountName: nexus-repository-statefulset-sa
       initContainers:
         # chown nexus-data to 'nexus' user and init log directories/files for a new pod
         # otherwise the side car containers will crash a couple of times and backoff whilst waiting
         # for nxrm-app to start and this increases the total start up time.
         - name: chown-nexusdata-owner-to-nexus-and-init-log-dir
           image: busybox:1.33.1
-          command: [/bin/sh]
+          command: [ /bin/sh ]
           args:
             - -c
             - >-
@@ -48,11 +48,12 @@ spec:
               touch -a /nexus-data/log/request.log &&
               chown -R '200:200' /nexus-data
           volumeMounts:
-            - name: nexusdata
+            - name: nexus-data
               mountPath: /nexus-data
+      terminationGracePeriodSeconds: 20
       containers:
         - name: nxrm-app
-          image: sonatype/nexus3:3.37.0
+          image: sonatype/nexus3:3.44.0
           securityContext:
             runAsUser: 200
           imagePullPolicy: IfNotPresent
@@ -60,7 +61,7 @@ spec:
             - containerPort: 8081
           env:
             - name: DB_NAME
-              value: <db-name>
+              value: "nexus"
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -79,8 +80,10 @@ spec:
             - name: NEXUS_SECURITY_INITIAL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nxrm-secret
-                  key: nxrm-admin-user
+                  name: nxrm-admin-secret
+                  key: nexus-admin-password
+            - name: NEXUS_SECURITY_RANDOMPASSWORD
+              value: "false"
              - name: INSTALL4J_ADD_VM_PARAMS
               value: "-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m -Dnexus.licenseFile=/nxrm-secrets/nxrm-license.lic \
           -Dnexus.datastore.enabled=true -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs \
@@ -89,40 +92,37 @@ spec:
           -Dnexus.datastore.nexus.password=${DB_PASSWORD}"
           volumeMounts:
             - mountPath: /nxrm-secrets
-              name: nxrm-secrets
-            - name: nexusdata
+              name: nexus-secret
+            - name: nexus-data
               mountPath: /nexus-data
             - name: logback-tasklogfile-override
               mountPath: /nexus-data/etc/logback/logback-tasklogfile-appender-override.xml
               subPath: logback-tasklogfile-appender-override.xml
         - name: request-log
           image: busybox:1.33.1
-          args: [/bin/sh, -c, 'tail -n+1 -F /nexus-data/log/request.log']
+          args: [ /bin/sh, -c, 'tail -n+1 -F /nexus-data/log/request.log' ]
           volumeMounts:
-            - name: nexusdata
+            - name: nexus-data
               mountPath: /nexus-data
         - name: audit-log
           image: busybox:1.33.1
-          args: [/bin/sh, -c, 'tail -n+1 -F /nexus-data/log/audit/audit.log']
+          args: [ /bin/sh, -c, 'tail -n+1 -F /nexus-data/log/audit/audit.log' ]
           volumeMounts:
-            - name: nexusdata
+            - name: nexus-data
               mountPath: /nexus-data
         - name: tasks-log
           image: busybox:1.33.1
-          args: [/bin/sh, -c, 'tail -n+1 -F /nexus-data/log/tasks/allTasks.log']
+          args: [ /bin/sh, -c, 'tail -n+1 -F /nexus-data/log/tasks/allTasks.log' ]
           volumeMounts:
-            - name: nexusdata
+            - name: nexus-data
               mountPath: /nexus-data
       volumes:
-        - name: nexusdata
-          persistentVolumeClaim:
-            claimName: ebs-claim
-        - name: nxrm-secrets
+        - name: nexus-secret
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "nxrm-nexus-27385-nxrm-secret"
+              secretProviderClass: nxrm-nexus-secret
               fsType: ext4
         - name: logback-tasklogfile-override
           configMap:
@@ -130,3 +130,12 @@ spec:
             items:
               - key: logback-tasklogfile-appender-override.xml
                 path: logback-tasklogfile-appender-override.xml
+  volumeClaimTemplates:
+    - metadata:
+        name: nexus-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "nxrm-nexus-ebs-storage"
+        resources:
+          requests:
+            storage: 20Gi
