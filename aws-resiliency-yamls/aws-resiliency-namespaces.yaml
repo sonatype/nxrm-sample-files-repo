@@ -6,7 +6,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: nxrm-nexus-27385
+  name: nxrm
 ---
 apiVersion: v1
 kind: Namespace
