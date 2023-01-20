@@ -19,7 +19,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /mnt
+    path: /nexus-repo-mgr-work-dir/work
   nodeAffinity:
     required:
       nodeSelectorTerms:
