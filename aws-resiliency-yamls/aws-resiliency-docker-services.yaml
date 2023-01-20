@@ -7,16 +7,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nxrm-service-docker
+  name: nxrm-nexus-docker-service
   namespace: nxrm
   labels:
     app: nxrm
 spec:
-  type: NodePort
+  type:  NodePort
   selector:
     app: nxrm
   ports:
-    - name: docker-connector
+    - name: docker-service
       protocol: TCP
       port: 9090
       targetPort: 8081

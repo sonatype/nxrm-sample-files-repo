@@ -1,4 +1,5 @@
 # Copyright Sonatype, Inc., 2022, All Rights Reserved.
+#
 # Note: This YAML file is just an example and cannot be used as-is.
 # You must fill it out with the appropriate information for your deployment to be able to use it.
 
@@ -40,6 +41,19 @@ subjects:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: fluent-bit-cluster-info
+  namespace: amazon-cloudwatch
+data:
+  cluster.name: nexus-repository-ha #eks cluster name
+  http.server: "On"
+  http.port: "2020"
+  read.head: "Off"
+  read.tail: "On"
+  logs.region: us-east-1
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: fluent-bit-config
   namespace: amazon-cloudwatch
   labels:
@@ -68,7 +82,7 @@ data:
     [INPUT]
         Name                tail
         Tag                 nexus.nexus-log
-        Path                /var/log/containers/nxrm-deployment-nexus-27385*nxrm-nexus-27385_nxrm-app*.log
+        Path                /var/log/containers/nxrm-statefulset*nxrm_nxrm-app-*.log
         Parser              docker
         DB                  /var/fluent-bit/state/flb_container.db
         Mem_Buf_Limit       5MB
@@ -103,7 +117,7 @@ data:
     [INPUT]
         Name                tail
         Tag                 nexus.request-log
-        Path                /var/log/containers/nxrm-deployment-nexus-27385*nxrm-nexus-27385_request-log*.log
+        Path                /var/log/containers/nxrm-statefulset*nxrm_request-log-*.log
         Parser              docker
         DB                  /var/fluent-bit/state/flb_container.db
         Mem_Buf_Limit       5MB
@@ -138,7 +152,7 @@ data:
     [INPUT]
         Name                tail
         Tag                 nexus.audit-log
-        Path                /var/log/containers/nxrm-deployment-nexus-27385*nxrm-nexus-27385_audit-log*.log
+        Path                /var/log/containers/nxrm-statefulset*nxrm_audit-log-*.log
         Parser              docker
         DB                  /var/fluent-bit/state/flb_container.db
         Mem_Buf_Limit       5MB
@@ -173,7 +187,7 @@ data:
     [INPUT]
         Name                tail
         Tag                 nexus.tasks-log
-        Path                /var/log/containers/nxrm-deployment-nexus-27385*nxrm-nexus-27385_tasks-log*.log
+        Path                /var/log/containers/nxrm-statefulset*nxrm_tasks-log-*.log
         Parser              docker
         DB                  /var/fluent-bit/state/flb_container.db
         Mem_Buf_Limit       5MB
