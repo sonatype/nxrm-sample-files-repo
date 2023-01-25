@@ -22,7 +22,7 @@ After creating the namespace, **you must run your YAML files in the order below:
 
 4. [Logback Tasklogfile Override YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/aws-resiliency-yamls/aws-nxrm-logback-tasklogfile-override.yaml)
 
-5. [Local Persistent Volume YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/aws-resiliency-yamls/aws-local-persistent-volume.yaml)
+5. [Local Persistent Volume YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/aws-resiliency-yamls/aws-resiliency-local-persistent-volume.yaml)
  > **Note** You should not use Dynamic EBS Volume Provisioning as it will cause scheduling problems if EKS provisions the Nexus Repository pod and the EBS volume in different AZs. The EBS volume used must be the local volume attached as illustrated in the sample persistent volume YAML file. 
 
 6. [Local Persistent Volume Claim YAML](https://github.com/sonatype/nxrm-sample-files-repo/blob/main/aws-resiliency-yamls/aws-resiliency-local-persistent-volume-claim.yaml)
