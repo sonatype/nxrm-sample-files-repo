@@ -51,7 +51,7 @@ spec:
               mountPath: /nexus-data
       containers:
         - name: nxrm-app
-          image: sonatype/nexus3:3.37.0
+          image: sonatype/nexus3:3.45.1
           securityContext:
             runAsUser: 200
           imagePullPolicy: IfNotPresent
@@ -59,7 +59,7 @@ spec:
             - containerPort: 8081
           env:
             - name: DB_NAME
-              value: <db-name>
+              value: nexus
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -75,6 +75,8 @@ spec:
                 secretKeyRef:
                   name: nxrm-db-secret
                   key: db-host
+            - name: DB_PORT
+              value: 5432
             - name: NEXUS_SECURITY_INITIAL_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -83,7 +85,7 @@ spec:
             - name: INSTALL4J_ADD_VM_PARAMS
               value: "-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m -Dnexus.licenseFile=/nxrm-secrets/nxrm-license.lic \
           -Dnexus.datastore.enabled=true -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs \
-          -Dnexus.datastore.nexus.jdbcUrl=jdbc:postgresql://${DB_HOST}:3306/${DB_NAME} \
+          -Dnexus.datastore.nexus.jdbcUrl=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME} \
           -Dnexus.datastore.nexus.username=${DB_USER} \
           -Dnexus.datastore.nexus.password=${DB_PASSWORD}"
           volumeMounts:
