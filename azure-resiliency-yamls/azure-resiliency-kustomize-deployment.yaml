@@ -86,7 +86,7 @@ spec:
               name: nxrm-secret
               key: nxrm-admin-user
    - name: INSTALL4J_ADD_VM_PARAMS
-          value: "-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m -Dnexus.licenseFile=/nxrm-license/nxrm-license.lic \
+          value: "-Xms2703m -Xmx2703m -Dnexus.licenseFile=/nxrm-license/nxrm-license.lic \
           -Dnexus.datastore.enabled=true -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs \
           -Dnexus.datastore.nexus.jdbcUrl=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=require \
           -Dnexus.datastore.nexus.username=${DB_USER}@db_server_name \
