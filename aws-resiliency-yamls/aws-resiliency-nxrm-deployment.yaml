@@ -1,16 +1,15 @@
 # Copyright Sonatype, Inc., 2022, All Rights Reserved.
-# 
+#
 # The YAML below deploys Nexus Repository.
 # Note the following important information:
 # 1. replicas is set to 1.
-# 2. volumeMounts are specified for the Nexus Repository license, local persistent volume, and logback config map for consolidating task logs into one log file. 
+# 2. volumeMounts are specified for the Nexus Repository license, local persistent volume, and logback config map for consolidating task logs into one log file.
 # 3. Docker repositories will need additional ports exposed matching your repository connector configuration.
-# 4. The deployment YAML includes three busybox sidecar containers which tail the Nexus Repository logs via a local persistent volume and stream them to the worker node  running the nxrm pod where Fluentbit picks them up and send to CloudWatch. 
+# 4. The deployment YAML includes three busybox sidecar containers which tail the Nexus Repository logs via a local persistent volume and stream them to the worker node  running the nxrm pod where Fluentbit picks them up and send to CloudWatch.
 # See Kubernetes documentation at https://kubernetes.io/docs/concepts/cluster-administration/logging/ for more information on the sidecar pattern for accessing logs.
 #
-# Note: This YAML file is just an example and cannot be used as-is. 
+# Note: This YAML file is just an example and cannot be used as-is.
 # You must fill it out with the appropriate information for your deployment to be able to use it.
--------------
 
 apiVersion: apps/v1
 kind: Deployment
@@ -81,7 +80,7 @@ spec:
                 secretKeyRef:
                   name: nxrm-secret
                   key: nxrm-admin-user
-             - name: INSTALL4J_ADD_VM_PARAMS
+            - name: INSTALL4J_ADD_VM_PARAMS
               value: "-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m -Dnexus.licenseFile=/nxrm-secrets/nxrm-license.lic \
           -Dnexus.datastore.enabled=true -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs \
           -Dnexus.datastore.nexus.jdbcUrl=jdbc:postgresql://${DB_HOST}:3306/${DB_NAME} \
