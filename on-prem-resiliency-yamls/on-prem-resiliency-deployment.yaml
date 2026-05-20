@@ -43,6 +43,10 @@ spec:
           ports:
             - containerPort: 8081
           env:
+            - name: DB_HOST
+              value: <postgres-hostname>
+            - name: DB_PORT
+              value: "5432"
             - name: DB_NAME
               value: <db-name> 
             - name: DB_USER
@@ -62,7 +66,7 @@ spec:
           -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs \
           -Dnexus.datastore.nexus.name=nexus \
           -Dnexus.datastore.nexus.type=jdbc \
-          -Dnexus.datastore.nexus.jdbcUrl=jdbc:postgresql://postgres_url:5432/${DB_NAME} \
+          -Dnexus.datastore.nexus.jdbcUrl=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME} \
           -Dnexus.datastore.nexus.username=${DB_USER} \
           -Dnexus.datastore.nexus.password=${DB_PASSWORD}"
           volumeMounts:
