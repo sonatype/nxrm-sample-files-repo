@@ -46,7 +46,7 @@ spec:
             - name: DB_HOST
               value: <postgres-hostname>
             - name: DB_PORT
-              value: "5432"
+              value: 5432
             - name: DB_NAME
               value: <db-name> 
             - name: DB_USER
